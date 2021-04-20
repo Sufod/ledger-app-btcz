@@ -215,7 +215,7 @@ unsigned short btchip_apdu_sign_message_internal() {
             }
         }
         CATCH_ALL {
-            sw = SW_TECHNICAL_DETAILS(0x0F);
+            sw = SW_TECHNICAL_DETAILS(0x22);
         }
     discard : {
         os_memset(&btchip_context_D.transactionSummary, 0,
@@ -258,7 +258,7 @@ unsigned short btchip_compute_hash() {
             btchip_context_D.outLength = G_io_apdu_buffer[1] + 2;
         }
         CATCH_ALL {
-            sw = SW_TECHNICAL_DETAILS(0x0F);
+            sw = SW_TECHNICAL_DETAILS(0x44);
         }
         FINALLY {
             os_memset(&btchip_context_D.transactionSummary, 0,

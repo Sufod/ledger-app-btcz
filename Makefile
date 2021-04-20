@@ -33,7 +33,7 @@ APP_LOAD_FLAGS=--appFlags 0x250 --dep Bitcoin:$(APPVERSION)
 
 # simplify for tests
 ifndef COIN
-COIN=bitcoin
+COIN=bitcoinz
 endif
 
 ifeq ($(COIN),bitcoin_testnet)
@@ -158,9 +158,14 @@ else ifeq ($(COIN),nix)
 DEFINES   += COIN_P2PKH_VERSION=38 COIN_P2SH_VERSION=53 COIN_FAMILY=1 COIN_COINID=\"NIX\" COIN_COINID_HEADER=\"NIX\" COIN_COLOR_HDR=0x1685e8 COIN_COLOR_DB=0xffffff COIN_COINID_NAME=\"NIX\" COIN_COINID_SHORT=\"NIX\" COIN_NATIVE_SEGWIT_PREFIX=\"nix\" COIN_KIND=COIN_KIND_NIX COIN_FLAGS=FLAG_SEGWIT_CHANGE_SUPPORT
 APPNAME ="NIX"
 APP_LOAD_PARAMS += --path $(APP_PATH)
+else ifeq ($(COIN),bitcoinz)
+# BitcoinZ
+DEFINES   += COIN_P2PKH_VERSION=7352 COIN_P2SH_VERSION=7357 COIN_FAMILY=1 COIN_COINID=\"BitcoinZ\" COIN_COINID_HEADER=\"BITCOINZ\" COIN_COLOR_HDR=0x85bb65 COIN_COLOR_DB=0xc2ddb2 COIN_COINID_NAME=\"BitcoinZ\" COIN_COINID_SHORT=\"BTCZ\" COIN_KIND=COIN_KIND_BITCOINZ
+APPNAME ="BitcoinZ"
+APP_LOAD_PARAMS += --path $(APP_PATH)
 else
 ifeq ($(filter clean,$(MAKECMDGOALS)),)
-$(error Unsupported COIN - use bitcoin_testnet, bitcoin, bitcoin_cash, bitcoin_gold, litecoin, dogecoin, dash, zcash, horizen, komodo, stratis, peercoin, pivx, viacoin, vertcoin, stealth, digibyte, qtum, bitcoin_private, zcoin, gamecredits, zclassic, xsn, nix)
+$(error Unsupported COIN - use bitcoin_testnet, bitcoin, bitcoin_cash, bitcoin_gold, litecoin, dogecoin, dash, zcash, horizen, komodo, stratis, peercoin, pivx, viacoin, vertcoin, stealth, digibyte, qtum, bitcoin_private, zcoin, gamecredits, zclassic, xsn, nix, bitcoinz)
 endif
 endif
 
@@ -219,13 +224,13 @@ DEFINES		  += HAVE_UX_FLOW
 endif
 
 # Enabling debug PRINTF
-DEBUG = 0
+DEBUG = 1
 ifneq ($(DEBUG),0)
 
         ifeq ($(TARGET_NAME),TARGET_NANOX)
-                DEFINES   += HAVE_PRINTF PRINTF=mcu_usb_printf
+                DEFINES   += HAVE_SPRINTF HAVE_PRINTF PRINTF=mcu_usb_printf
         else
-                DEFINES   += HAVE_PRINTF PRINTF=screen_printf
+                DEFINES   += HAVE_SPRINTF HAVE_PRINTF PRINTF=screen_printf
         endif
 else
         DEFINES   += PRINTF\(...\)=
@@ -286,4 +291,4 @@ include $(BOLOS_SDK)/Makefile.rules
 dep/%.d: %.c Makefile
 
 listvariants:
-	@echo VARIANTS COIN bitcoin_testnet bitcoin bitcoin_cash bitcoin_gold litecoin dogecoin dash zcash horizen komodo stratis peercoin pivx viacoin vertcoin stealth digibyte qtum bitcoin_private zcoin gamecredits zclassic xsn nix
+	@echo VARIANTS COIN bitcoin_testnet bitcoin bitcoin_cash bitcoin_gold litecoin dogecoin dash zcash horizen komodo stratis peercoin pivx viacoin vertcoin stealth digibyte qtum bitcoin_private zcoin gamecredits zclassic xsn nix bitcoinz

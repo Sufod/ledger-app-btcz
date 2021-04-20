@@ -238,6 +238,8 @@ void transaction_parse(unsigned char parseMode) {
                                btchip_context_D.transactionBufferPointer, 4);
                     transaction_offset_increase(4);
 
+                    PRINTF("Using overwinter? %d\n", btchip_context_D.usingOverwinter);
+
                     if (btchip_context_D.usingOverwinter) {
                         // nVersionGroupId
                         check_transaction_available(4);
@@ -271,7 +273,6 @@ void transaction_parse(unsigned char parseMode) {
 
                 case BTCHIP_TRANSACTION_DEFINED_WAIT_INPUT: {
                     unsigned char trustedInputFlag = 1;
-                    PRINTF("Process input\n");
                     if (btchip_context_D.transactionContext
                             .transactionRemainingInputsOutputs == 0) {
                         // No more inputs to hash, move forward
@@ -320,7 +321,7 @@ void transaction_parse(unsigned char parseMode) {
                             }
                             break;
                         default:
-                            PRINTF("Invalid trusted input flag\n");
+                            PRINTF("Invalid trusted input flag: %d\n", *btchip_context_D.transactionBufferPointer);
                             goto fail;
                         }
                         /*
