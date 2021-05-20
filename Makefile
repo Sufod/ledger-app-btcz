@@ -33,7 +33,7 @@ APP_LOAD_FLAGS=--appFlags 0xa50 --dep Bitcoin:$(APPVERSION)
 
 # simplify for tests
 ifndef COIN
-COIN=bitcoinz
+COIN=bitcoin
 endif
 
 ifeq ($(COIN),bitcoin_testnet)
